@@ -12,8 +12,33 @@ STATUS_CHOICE = {
 }
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=30, blank=False)
+    created = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+      verbose_name = "Категория"
+      verbose_name_plural = "Категории"
+
+    def __str__(self):
+      return str(self.name)
+
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=30, blank=False)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    created = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+      verbose_name = "Субкатегория"
+      verbose_name_plural = "Субкатегории"
+
+    def __str__(self):
+      return str(self.name)
+
 class Product(models.Model):
     name = models.CharField(max_length=30)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
     price = models.IntegerField()
     created = models.DateTimeField(default=datetime.now)
     available = models.BooleanField(default=True)
