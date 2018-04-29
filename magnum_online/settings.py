@@ -38,10 +38,14 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-DEV_APPS = []
+DEV_APPS = [
+  'requests',
+  'transliterate'
+]
 
 PROJECT_APPS = [
-  'accounts'
+  'accounts',
+  'products'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + DEV_APPS + PROJECT_APPS

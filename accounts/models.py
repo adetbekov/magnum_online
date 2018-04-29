@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 import os
 
 
-def upload_full_image(instance, filename):
-    return "avatars/%s%s%s" % (instance.id, hashing(), os.path.splitext(filename)[1])
+# def upload_full_image(instance, filename):
+#     return "avatars/%s%s%s" % (instance.id, hashing(), os.path.splitext(filename)[1])
 
 
 class Profile(models.Model):
