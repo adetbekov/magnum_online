@@ -8,7 +8,7 @@ def upload_full_image(instance, filename):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, related_name='profile')
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     birth = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=12, null=True, blank=True)
     
