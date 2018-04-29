@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
-from magnum_online.functions import hashing
+from django.contrib.auth.models import User
+from magnum_online.functions import randhash6
 
 
 class Product(models.Model):
@@ -11,6 +12,6 @@ class Product(models.Model):
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    cart = models.ManyToManyFiled(Product)
-    created = models.DateTimeField(default=datetime.now())
-    qr_hash = models.CharField(max_field=10, default=functions., unique=True)
+    cart = models.ManyToManyField(Product)
+    created = models.DateTimeField(default=datetime.now)
+    qr_hash = models.CharField(max_length=6, default=randhash6, unique=True)
