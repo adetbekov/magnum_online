@@ -26,8 +26,26 @@ class Product(models.Model):
         return "<product-{}>".format(strnormalize(self.name))
 
 
+class Point(models.Model):
+    name = models.CharField(max_length=30)
+    real_address = models.CharField(max_length=30)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    created = models.DateTimeField(default=datetime.now)
+    open_time = models.TimeField()
+    close_time = models.TimeField()
+
+    class Meta:
+        verbose_name = "Пункт выдачи"
+        verbose_name_plural = "Пункты выдачи"
+
+    def __str__(self):
+        return "<point-{}>".format(strnormalize(self.name))
+
+
 class Transaction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    point = models.ForeignKey(Point, on_delete=models.SET_NULL, null=True)
     cart = models.ManyToManyField(Product)
     status = models.CharField(max_length=3, choices=STATUS_CHOICE, default="I")
     created = models.DateTimeField(default=datetime.now)
