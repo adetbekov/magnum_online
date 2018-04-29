@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Transaction
+from .models import Product, Point, Transaction
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -7,6 +7,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name','created','price','available')
     list_filter=['available']
     search_fields=['name','price']
+
+
+class PointAdmin(admin.ModelAdmin):
+    model = Point
+    list_display = ('name','real_address','open_time','close_time')
+    search_fields=['name','real_address']
 
 
 class TransactionAdmin(admin.ModelAdmin):
@@ -18,4 +24,5 @@ class TransactionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Point, PointAdmin)
 admin.site.register(Transaction, TransactionAdmin)
