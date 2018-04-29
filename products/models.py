@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
-from magnum_online.functions import randhash6
+from magnum_online.functions import randhash6, strnormalize
 
 
 STATUS_CHOICE = {
@@ -23,7 +23,7 @@ class Product(models.Model):
         verbose_name_plural = "Продукты"
 
     def __str__(self):
-        return "<product-{}>".format(self.id)
+        return "<product-{}>".format(strnormalize(self.name))
 
 
 class Transaction(models.Model):
