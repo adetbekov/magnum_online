@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Point, Transaction, Category, SubCategory
+from .models import Product, Point, Transaction, Category, SubCategory, Manufacturer
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -19,6 +19,13 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name','created')
     search_fields=['name']
     inlines = [SubCategoryInline]
+
+
+class ManufacturerAdmin(admin.ModelAdmin):
+    model = Manufacturer
+    list_display = ('name','main_category','country')
+    list_filter=['main_category','country']
+    search_fields=['name','description']
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -43,6 +50,7 @@ class TransactionAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
+admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Point, PointAdmin)
 admin.site.register(Transaction, TransactionAdmin)
