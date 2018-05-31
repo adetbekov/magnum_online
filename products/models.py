@@ -1,7 +1,9 @@
+import os
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
-from magnum_online.functions import randhash6, strnormalize
+from django_countries.fields import CountryField
+from magnum_online.functions import randhash6, strnormalize, hashing
 
 
 STATUS_CHOICE = {
@@ -10,6 +12,9 @@ STATUS_CHOICE = {
 	('R', 'Rejected'),
 	('C', 'Canceled'),
 }
+
+def upload_full_image(instance, filename):
+    return "images/%s%s%s" % (instance.id, hashing(), os.path.splitext(filename)[1])
 
 
 class Category(models.Model):
@@ -36,10 +41,31 @@ class SubCategory(models.Model):
     def __str__(self):
       return str(self.name)
 
+
+class Manufacturer(models.Model):
+    name = models.CharField(max_length=30)
+    main_category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    description = models.TextField()
+    country = CountryField()
+    full_image = models.ImageField(null=True, blank=True, upload_to=upload_full_image)
+    created = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+        verbose_name = "Производитель"
+        verbose_name_plural = "Производители"
+
+    def __str__(self):
+        return "<manufacturer-{}>".format(strnormalize(self.name))
+
+
 class Product(models.Model):
     name = models.CharField(max_length=30)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
     price = models.IntegerField()
+    code = models.IntegerField(null=True, blank=True)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(null=True, blank=True)
+    full_image = models.ImageField(null=True, blank=True, upload_to=upload_full_image)
     created = models.DateTimeField(default=datetime.now)
     available = models.BooleanField(default=True)
 

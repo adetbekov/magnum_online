@@ -40,7 +40,8 @@ DJANGO_APPS = [
 
 DEV_APPS = [
   'requests',
-  'transliterate'
+  'transliterate',
+  'django_countries'
 ]
 
 PROJECT_APPS = [
